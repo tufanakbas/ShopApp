@@ -3,6 +3,7 @@ using ShopApp.Business.Abstract;
 using ShopApp.Entities;
 using ShopApp.WebUI.Models;
 using System.Linq;
+using static ShopApp.WebUI.Models.ProductListModel;
 
 namespace ShopApp.WebUI.Controllers
 {
@@ -30,11 +31,19 @@ namespace ShopApp.WebUI.Controllers
                 Categories = product.ProductCategories.Select(c => c.Category).ToList()
             });
 		}
-        public IActionResult List()
+        public IActionResult List(string category, int page = 1)
         {
+            const int pageSize = 3;
             return View(new ProductListModel()
             {
-                Products = _productService.GetAll()
+                PageModel = new PageInfo() 
+                {
+                    TotalItems = _productService.GetCountByCategory(category),
+                    CurrentPage = page,
+                    ItemsPerPage = pageSize,
+                    CurrentCategory = category
+                },
+                Products = _productService.GetProductsByCategory(category, page,pageSize)
             });
         }
     }

@@ -13,8 +13,11 @@ namespace ShopApp.Business.Abstract
 		Product GetProductDetails(int id);
 		List<Product> GetAll();
 		List<Product> GetPopularProducts();
-		void Create(Product entity);
+        List<Product> GetProductsByCategory(string category, int page, int pageSize);
+        void Create(Product entity);
 		void Update(Product entity);
 		void Delete(Product entity);
-	}
+		int GetCountByCategory(string category);
+
+    }
 }

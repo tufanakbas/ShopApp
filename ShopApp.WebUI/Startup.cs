@@ -6,7 +6,6 @@ using Microsoft.Extensions.Hosting;
 using ShopApp.Business.Abstract;
 using ShopApp.Business.Concrete;
 using ShopApp.DataAccess.Abstract;
-using ShopApp.DataAccess.Concrete.Memory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,12 +29,12 @@ namespace ShopApp.WebUI
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddRazorPages();
+			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+			services.AddMvc(option => option.EnableEndpointRouting = false);
 			services.AddScoped<IProductDal, EfCoreProductDal>();
 			services.AddScoped<IProductService, ProductManager>();
 			services.AddScoped<ICategoryDal, EfCoreCategoryDal>();
 			services.AddScoped<ICategoryService, CategoryManager>();
-			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-			services.AddMvc(option => option.EnableEndpointRouting = false);
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,12 +59,15 @@ namespace ShopApp.WebUI
 
 			app.UseEndpoints(endpoints =>
 			{
-					endpoints.MapControllerRoute(
-					name: "default",
-					pattern: "{controller=Home}/{action=Index}");
-			});
+                endpoints.MapControllerRoute(
+					name: "products",
+					pattern: "products/{category?}",
+					defaults: new { controller = "Shop", action = "List" });
 
-			app.UseMvcWithDefaultRoute();
+                endpoints.MapControllerRoute(
+					name: "default",
+					pattern: "{controller=Home}/{action=Index}/{id?}");
+			});
 		}
 	}
 }

@@ -37,7 +37,12 @@ namespace ShopApp.Business.Concrete
 			return _productDal.GetById(id);
 		}
 
-		public List<Product> GetPopularProducts()
+        public int GetCountByCategory(string category)
+        {
+			return _productDal.GetCountByCategory(category);
+        }
+
+        public List<Product> GetPopularProducts()
 		{
 			return _productDal.GetAll(p=>p.Price>2000);
 		}
@@ -46,6 +51,11 @@ namespace ShopApp.Business.Concrete
         {
             return _productDal.GetProductDetails(id);
         }
+
+        public List<Product> GetProductsByCategory(string category, int page, int pageSize)
+        {
+			return _productDal.GetProductsByCategory(category, page, pageSize);
+		}
 
         public void Update(Product entity)
 		{
