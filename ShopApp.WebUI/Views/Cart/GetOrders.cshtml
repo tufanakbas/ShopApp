@@ -1,0 +1,66 @@
+﻿@model List<OrderListModel>
+@{
+	ViewData["Title"] = "GetOrders";
+}
+<h1>Geçmiş Siparişlerim</h1>
+<hr />
+@foreach (var order in Model)
+{
+	<table class="table table-bordered border-dark table-sm mb-3">
+		<thead class="bg-dark text-white">
+			<tr>
+				<td colspan="2">Sipariş Numarası:#@order.OrderId</td>
+				<th>Tutar</th>
+				<th>Adet</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var orderItem in order.OrderItems)
+			{
+				<tr>
+					<td style="width:60px">
+						<img src="~/img/@orderItem.ImageUrl" width="50" />
+					</td>
+					<td>
+						@orderItem.Name
+					</td>
+					<td>
+						@orderItem.Price
+					</td>
+					<td>
+						@orderItem.Quantity
+					</td>
+				</tr>
+			}
+		</tbody>
+		<tfoot>
+			<tr>
+				<td colspan="2">Alıcı Adı Soyadı:</td>
+				<td>@order.FirstName @order.LastName</td>
+				<td rowspan="3">Total: @order.TotalPrice()</td>
+			</tr>
+			<tr>
+				<td colspan="2">Adres:</td>
+				<td>@order.Address</td>
+			</tr>
+			<tr>
+				<td colspan="2">Telefon Numarası:</td>
+				<td>@order.Phone</td>
+			</tr>
+			<tr>
+				<td colspan="2">E-Posta:</td>
+				<td>@order.Email</td>
+			</tr>
+			<tr>
+				<td colspan="2">Ödeme Durumu:</td>
+				<td>@order.PaymentTypes</td>
+			</tr>
+			<tr>
+				<td colspan="2">Sipariş Durumu:</td>
+				<td>@order.OrderState</td>
+			</tr>
+		</tfoot>
+	</table>
+	<br />
+	<br />
+}

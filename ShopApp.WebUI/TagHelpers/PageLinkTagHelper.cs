@@ -27,7 +27,14 @@ namespace ShopApp.WebUI.TagHelpers
                 }
                 stringBuilder.Append("<li>");
             }
+            stringBuilder.Append("</ul>");
+
+            // CSS stilini ekle
+            output.PostContent.AppendHtml("<style>.pagination .page-item.active .page-link { background-color: orange; border-color: orange; color: black; } .pagination .page-item .page-link { background-color: white; border-color: orange; color: black; }</style>");
+
+            // HTML çıktısını ayarla
             output.Content.SetHtmlContent(stringBuilder.ToString());
+
             base.Process(context, output);
         }
     }

@@ -1,6 +1,14 @@
 ﻿@model CategoryListViewModel
 
 <div class="list-group">
+
+    <a asp-controller="Shop"
+       asp-action="List"
+       asp-route-category=""
+       class="list-group-item list-group-item-action @(string.IsNullOrEmpty(Model.SelectedCategory) ? "active" : "")">
+        Tüm Kategoriler
+    </a>
+
     @foreach (var item in Model.Categories)
     {
         <a 
@@ -12,3 +20,12 @@
         </a>
     }
 </div>
+
+<style>
+    .list-group-item.active {
+        background-color: orange; /* Seçili kategori bağlantısının arka plan rengi */
+        border-color: orange;
+        color: #fff; /* Seçili kategori bağlantısının metin rengi */
+    }
+
+</style>
